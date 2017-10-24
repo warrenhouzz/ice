@@ -88,4 +88,5 @@
 <script type="text/javascript" src="${resource(dir: 'js', file: 'angular-ui.js')}"></script>
 <script type="text/javascript" src="${ReaderConfig.getInstance().highstockUrl}"></script>
 <script type="text/javascript" src="${resource(dir: 'js', file: 'ice.js')}"></script>
+<script type="text/javascript" src="${resource(dir: 'js', file: 'houzz.js')}"></script>
 </html>

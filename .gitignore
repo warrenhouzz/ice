@@ -52,3 +52,6 @@
 
 # FUSE files
 .fuse_hidden*
+
+# Sublime
+*.sublime-*

@@ -68,6 +68,44 @@
       </ul>
     </li>
     </g:if>
+
+    <li class="menuButton dropdown">
+      <a class="link_with_params" href="${resource(dir: 'dashboard', file: 'reservation')}#{{getTimeParams()}}" ng-click="reload()">Preset Dashboards</a>
+      <ul>
+
+
+        <li class="menuButton"><a class="link_with_params" href="https://ice-aws.houzz.net/ice/dashboard/breakdown#groupBy=ApplicationGroup&#{{getTimeParams()}}" ng-click="reload()">Weekly EC2 Cost by Team</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=UsageType&consolidate=daily&product=ec2_instance&operation=OndemandInstances&#{{getTimeParams()}}" ng-click="reload()">Ondemand Instance Cost / Instance Type</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=UsageType&consolidate=daily&product=ec2_instance&operation=OndemandInstances&account=688976015282&#{{getTimeParams()}}" ng-click="reload()">- Production</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=UsageType&consolidate=daily&product=ec2_instance&operation=OndemandInstances&account=056264667071&#{{getTimeParams()}}" ng-click="reload()">- Datawarehouse</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=UsageType&consolidate=daily&product=ec2_instance&operation=OndemandInstances&account=477121734600&#{{getTimeParams()}}" ng-click="reload()">- Staging</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=UsageType&consolidate=daily&product=ec2_instance&operation=OndemandInstances&account=007195287850&#{{getTimeParams()}}" ng-click="reload()">- Development</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="https://ice-aws.houzz.net/ice/dashboard/detail#groupBy=Account&consolidate=daily&product=ec2_instance&operation=OndemandInstances&#{{getTimeParams()}}" ng-click="reload()">Ondemand Instance Cost / Account</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="https://ice-aws.houzz.net/ice/dashboard/reservation#groupBy=Operation&showZones=true&consolidate=daily&product=ec2_instance&#{{getTimeParams()}}" ng-click="reload()">Ondemand vs Reservations Cost</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="https://ice-aws.houzz.net/ice/dashboard/detail#usage_cost=cost&groupBy=UsageType&consolidate=daily&product=ebs&#{{getTimeParams()}}" ng-click="reload()">EBS Cost / Volume Type</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="https://ice-aws.houzz.net/ice/dashboard/detail#usage_cost=cost&groupBy=UsageType&consolidate=daily&product=s3&#{{getTimeParams()}}" ng-click="reload()">S3 Cost / Storage Type</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="https://ice-aws.houzz.net/ice/dashboard/detail#usage_cost=cost&groupBy=UsageType&consolidate=daily&product=s3&#{{getTimeParams()}}" ng-click="reload()">S3 Cost / Storage Type</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="https://ice-aws.houzz.net/ice/dashboard/detail#groupBy=Account&consolidate=daily&plotType=area&product=s3&operation=StandardStorage&#{{getTimeParams()}}" ng-click="reload()">S3 Cost / Account</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="https://ice-aws.houzz.net/ice/dashboard/detail#groupBy=Operation&consolidate=hourly&product=ec2,ec2_instance&#{{getTimeParams()}}" ng-click="reload()">EC2 Cost / Type</a></li>
+                
+        <li class="menuButton"><a class="link_with_params" href="${resource(dir: 'dashboard', file: 'reservation')}#showZones=true&{{getTimeParams()}}" ng-click="reload()">Reservations By Zone</a></li>
+        
+
+      </ul>
+    </li>
+
   </ul>
   <div class="clear"></div>
   <g:layoutBody/>

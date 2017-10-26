@@ -17,6 +17,7 @@
 --%>
 
 <%@ page import="com.netflix.ice.reader.ReaderConfig" %>
+<% timeParams = getTimeParams() or "start=2017-09-26%2012AM&end=2017-10-26%2009PM" %>
 
 <!DOCTYPE html>
 <html ng-app="ice">
@@ -74,7 +75,7 @@
       <ul>
 
 
-        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/breakdown#groupBy=ApplicationGroup&{{getTimeParams()}}" ng-click="reload()">Weekly EC2 Cost by Team</a></li>
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/breakdown#groupBy=ApplicationGroup&{{getTimeParams()}}" ng-click="reload()">Weekly EC2 Instance Cost by Team</a></li>
 
         <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=UsageType&consolidate=daily&product=ec2_instance&operation=OndemandInstances&{{getTimeParams()}}" ng-click="reload()">Ondemand Instance Cost / Instance Type</a></li>
 
@@ -90,18 +91,20 @@
 
         <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/reservation#groupBy=Operation&showZones=true&consolidate=daily&product=ec2_instance&{{getTimeParams()}}" ng-click="reload()">Ondemand vs Reservations Cost</a></li>
 
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=Operation&consolidate=hourly&product=ec2,ec2_instance&{{getTimeParams()}}" ng-click="reload()">EC2 Total Cost / Type</a></li>
+
         <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#usage_cost=cost&groupBy=UsageType&consolidate=daily&product=ebs&{{getTimeParams()}}" ng-click="reload()">EBS Cost / Volume Type</a></li>
 
-        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#usage_cost=cost&groupBy=UsageType&consolidate=daily&product=s3&{{getTimeParams()}}" ng-click="reload()">S3 Cost / Storage Type</a></li>
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#usage_cost=cost&groupBy=Account&consolidate=daily&product=ebs&&usageType=EBS:VolumeUsage.gp2&{{getTimeParams()}}" ng-click="reload()">- GP2 / Account</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#usage_cost=cost&groupBy=Account&consolidate=daily&product=ebs&usageType=EBS:VolumeUsage.st1&{{getTimeParams()}}" ng-click="reload()">- ST1 / Account</a></li>
 
         <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#usage_cost=cost&groupBy=UsageType&consolidate=daily&product=s3&{{getTimeParams()}}" ng-click="reload()">S3 Cost / Storage Type</a></li>
 
         <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=Account&consolidate=daily&plotType=area&product=s3&operation=StandardStorage&{{getTimeParams()}}" ng-click="reload()">S3 Cost / Account</a></li>
-
-        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=Operation&consolidate=hourly&product=ec2,ec2_instance&{{getTimeParams()}}" ng-click="reload()">EC2 Cost / Type</a></li>
           
         <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#showResourceGroups=true&groupBy=UsageType&resourceGroup=ec2_instance&{{getTimeParams()}}" ng-click="reload()">Unmapped Instances (No Team)</a></li>
-              
+
       </ul>
     </li>
 

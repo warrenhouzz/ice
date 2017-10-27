@@ -17,7 +17,6 @@
 --%>
 
 <%@ page import="com.netflix.ice.reader.ReaderConfig" %>
-<% timeParams = getTimeParams() or "start=2017-09-26%2012AM&end=2017-10-26%2009PM" %>
 
 <!DOCTYPE html>
 <html ng-app="ice">
@@ -27,6 +26,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" href="${resource(dir: 'css/ui-lightness', file: 'jquery-ui-1.10.3.custom.min.css')}"/>
   <link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}"/>
+  <link rel="stylesheet" href="${resource(dir: 'css', file: 'houzz.css')}"/>
   <g:layoutHead/>
 </head>
 <body class="nactest" ng-controller="mainCtrl">
@@ -46,36 +46,45 @@
     <li class="menuButton dropdown">
       <a class="link_with_params" href="${resource(dir: 'dashboard', file: 'detail')}#{{getTimeParams()}}" ng-click="reload()">AWS Details</a>
       <ul>
-        <li class="menuButton"><a class="link_with_params" href="${resource(dir: 'dashboard', file: 'detail')}#{{getTimeParams()}}" ng-click="reload()">General Details</a></li>
+        <li class="menuButton"><a class="link_with_params" href="${resource(dir: 'dashboard', file: 'detail')}#groupBy=Product&{{getTimeParams()}}" ng-click="reload()">General Details</a></li>
         <g:if test="${ReaderConfig.getInstance().resourceService != null}">
-        <li class="menuButton"><a class="link_with_params" href="${resource(dir: 'dashboard', file: 'detail')}#showResourceGroups=true&{{getTimeParams()}}" ng-click="reload()">Details With Resource Groups</a></li>
+        <li class="menuButton"><a class="link_with_params" href="${resource(dir: 'dashboard', file: 'detail')}#showResourceGroups=true&groupBy=Product&{{getTimeParams()}}" ng-click="reload()">Details With Resource Groups</a></li>
         </g:if>
       </ul>
     </li>
     <li class="menuButton dropdown">
       <a class="link_with_params" href="${resource(dir: 'dashboard', file: 'reservation')}#{{getTimeParams()}}" ng-click="reload()">Reservations</a>
       <ul>
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/reservation#groupBy=UsageType&consolidate=daily&product=ec2_instance&operation=ReservedInstancesHeavy&{{getTimeParams()}}" ng-click="reload()">Reservations By Instance Type</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/reservation#groupBy=Operation&showZones=true&consolidate=daily&product=ec2_instance&{{getTimeParams()}}" ng-click="reload()">Ondemand vs Reservations Cost</a></li>
+
         <li class="menuButton"><a class="link_with_params" href="${resource(dir: 'dashboard', file: 'reservation')}#{{getTimeParams()}}" ng-click="reload()">Reservations By Region</a></li>
+
         <li class="menuButton"><a class="link_with_params" href="${resource(dir: 'dashboard', file: 'reservation')}#showZones=true&{{getTimeParams()}}" ng-click="reload()">Reservations By Zone</a></li>
+
+       
       </ul>
     </li>
     <g:if test="${ReaderConfig.getInstance().resourceService != null}">
     <li class="menuButton dropdown">
       <a class="link_with_params" href="${resource(dir: 'dashboard', file: 'breakdown')}#groupBy=ApplicationGroup&{{getTimeParams()}}" ng-click="reload()">Breakdown</a>
       <ul>
-        <li class="menuButton"><a class="" href="${resource(dir: 'dashboard', file: 'breakdown')}#groupBy=ApplicationGroup&{{getTimeParams()}}" ng-click="reload()">By Application Group</a></li>
+        <li class="menuButton"><a class="" href="${resource(dir: 'dashboard', file: 'breakdown')}#groupBy=ApplicationGroup&{{getTimeParams()}}" ng-click="reload()">By Team</a></li>
         <li class="menuButton"><a class="" href="${resource(dir: 'dashboard', file: 'breakdown')}#{{getTimeParams()}}" ng-click="reload()">By Resource Group</a></li>
         <li class="menuButton"><a class="" href="${resource(dir: 'dashboard', file: 'editappgroup')}" ng-click="reload()">Create New Application Group</a></li>
+
       </ul>
     </li>
     </g:if>
 
     <li class="menuButton dropdown">
-      <a class="link_with_params" href="${resource(dir: 'dashboard', file: 'reservation')}#{{getTimeParams()}}" ng-click="reload()">Preset Charts</a>
+      <a class="link_with_params houzz_header" href="${resource(dir: 'dashboard', file: 'reservation')}#{{getTimeParams()}}" ng-click="reload()">EC2</a>
       <ul>
 
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=Operation&consolidate=hourly&product=ec2,ec2_instance&{{getTimeParams()}}" ng-click="reload()">Total Cost / Type</a></li>
 
-        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/breakdown#groupBy=ApplicationGroup&{{getTimeParams()}}" ng-click="reload()">Weekly EC2 Instance Cost by Team</a></li>
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/breakdown#groupBy=ApplicationGroup&{{getTimeParams()}}" ng-click="reload()">Weekly Instance Cost by Team</a></li>
 
         <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=UsageType&consolidate=daily&product=ec2_instance&operation=OndemandInstances&{{getTimeParams()}}" ng-click="reload()">Ondemand Instance Cost / Instance Type</a></li>
 
@@ -89,25 +98,36 @@
 
         <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=Account&consolidate=daily&product=ec2_instance&operation=OndemandInstances&{{getTimeParams()}}" ng-click="reload()">Ondemand Instance Cost / Account</a></li>
 
-        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/reservation#groupBy=Operation&showZones=true&consolidate=daily&product=ec2_instance&{{getTimeParams()}}" ng-click="reload()">Ondemand vs Reservations Cost</a></li>
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#showResourceGroups=true&groupBy=UsageType&resourceGroup=ec2_instance&{{getTimeParams()}}" ng-click="reload()">Unmapped Instances (No Team)</a></li>
 
-        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=Operation&consolidate=hourly&product=ec2,ec2_instance&{{getTimeParams()}}" ng-click="reload()">EC2 Total Cost / Type</a></li>
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#showResourceGroups=true&groupBy=Account&resourceGroup=ec2_instance&{{getTimeParams()}}" ng-click="reload()">Unmapped Cost (No Team) / Account</a></li>
 
-        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#usage_cost=cost&groupBy=UsageType&consolidate=daily&product=ebs&{{getTimeParams()}}" ng-click="reload()">EBS Cost / Volume Type</a></li>
+
+      </ul>
+    </li>
+
+    <li class="menuButton dropdown">
+      <a class="link_with_params houzz_header" href="${resource(dir: 'dashboard', file: 'reservation')}#{{getTimeParams()}}" ng-click="reload()">EBS</a>
+      <ul>
+
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#usage_cost=cost&groupBy=UsageType&consolidate=daily&product=ebs&{{getTimeParams()}}" ng-click="reload()">By Volume Type</a></li>
 
         <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#usage_cost=cost&groupBy=Account&consolidate=daily&product=ebs&&usageType=EBS:VolumeUsage.gp2&{{getTimeParams()}}" ng-click="reload()">- GP2 / Account</a></li>
 
         <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#usage_cost=cost&groupBy=Account&consolidate=daily&product=ebs&usageType=EBS:VolumeUsage.st1&{{getTimeParams()}}" ng-click="reload()">- ST1 / Account</a></li>
 
-        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#usage_cost=cost&groupBy=UsageType&consolidate=daily&product=s3&{{getTimeParams()}}" ng-click="reload()">S3 Cost / Storage Type</a></li>
-
-        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=Account&consolidate=daily&plotType=area&product=s3&operation=StandardStorage&{{getTimeParams()}}" ng-click="reload()">S3 Cost / Account</a></li>
-          
-        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#showResourceGroups=true&groupBy=UsageType&resourceGroup=ec2_instance&{{getTimeParams()}}" ng-click="reload()">Unmapped Instances (No Team)</a></li>
-
       </ul>
     </li>
 
+
+    <li class="menuButton dropdown">
+      <a class="link_with_params houzz_header" href="${resource(dir: 'dashboard', file: 'reservation')}#{{getTimeParams()}}" ng-click="reload()">S3</a>
+      <ul>
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#usage_cost=cost&groupBy=UsageType&consolidate=daily&product=s3&{{getTimeParams()}}" ng-click="reload()">By Storage Type</a></li>
+
+        <li class="menuButton"><a class="link_with_params" href="/ice/dashboard/detail#groupBy=Account&consolidate=daily&plotType=area&product=s3&operation=StandardStorage&{{getTimeParams()}}" ng-click="reload()">By Account</a></li>
+      </ul>
+    </li>
   </ul>
   <div class="clear"></div>
   <g:layoutBody/>
